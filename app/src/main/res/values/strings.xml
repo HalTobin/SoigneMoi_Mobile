@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">SoigneMoi</string>
+    <string name="doctors_app">Espace Médecins</string>
+    <string name="username">Matricule</string>
+    <string name="password">Mot de passe</string>
+    <string name="connection">Connexion</string>
+    <string name="remember_login">Enregistrer les identifiants</string>
+    <string name="error_occured">Une erreur est survenue</string>
 </resources>

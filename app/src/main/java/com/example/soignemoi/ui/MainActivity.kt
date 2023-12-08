@@ -52,7 +52,8 @@ class MainActivity : ComponentActivity() {
                             LoginScreen(
                                 navController = navController,
                                 state = state,
-                                onEvent = viewModel::onEvent
+                                onEvent = viewModel::onEvent,
+                                uiEvent = viewModel.eventFlow
                             )
                         }
                         composable(Screen.PatientsList.route) {

@@ -3,8 +3,8 @@ package com.example.soignemoi.feature.login.presentation
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.soignemoi.data.network.LoginRequest
-import com.example.soignemoi.data.service.AuthService
+import com.example.soignemoi.data.api.LoginRequest
+import com.example.soignemoi.data.api.SessionManager
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -16,7 +16,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
-    private val authService: AuthService
+    private val sessionManager: SessionManager
 ): ViewModel() {
 
     private val _state = MutableStateFlow(LoginState())
@@ -26,9 +26,9 @@ class LoginViewModel @Inject constructor(
     val eventFlow = _eventFlow.asSharedFlow()
 
     init {
-        val id = authService.loadCredentials()
+        val id = sessionManager.loadCredentials()
         _state.update { it.copy(
-            saveLogin = authService.rememberLogin,
+            saveLogin = sessionManager.rememberLogin,
             username = id.mail,
             password = id.password
         ) }
@@ -43,14 +43,14 @@ class LoginViewModel @Inject constructor(
                 }
             }
             is LoginEvent.ChangeSavedLogin -> {
-                authService.rememberLogin = event.state
-                _state.update { it.copy(saveLogin = authService.rememberLogin) }
+                sessionManager.rememberLogin = event.state
+                _state.update { it.copy(saveLogin = sessionManager.rememberLogin) }
             }
             is LoginEvent.InvertShowPassword -> _state.update { it.copy(showPassword = !_state.value.showPassword) }
             is LoginEvent.Connect -> viewModelScope.launch {
                 _state.update { it.copy(error = false) }
                 try {
-                    val response = authService.connect(LoginRequest(state.value.username, state.value.password), _state.value.saveLogin)
+                    val response = sessionManager.connect(LoginRequest(state.value.username, state.value.password), _state.value.saveLogin)
                     if (response.role != "Doctor") _state.update { it.copy(error = true) }
                     else _eventFlow.emit(UiEvent.ConnectionSuccess)
                     Log.i("CONNECTION", "Role: ${response.role} Token: ${response.accessToken}")

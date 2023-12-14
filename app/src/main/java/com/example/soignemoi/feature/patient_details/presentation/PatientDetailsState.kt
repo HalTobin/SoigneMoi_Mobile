@@ -1,5 +1,6 @@
 package com.example.soignemoi.feature.patient_details.presentation
 
 data class PatientDetailsState(
-    val loading: Boolean = false
+    val loading: Boolean = false,
+    val patientId: Int? = null
 )

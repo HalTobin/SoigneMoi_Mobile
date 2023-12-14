@@ -22,7 +22,7 @@ fun PatientDetailsScreen(
         // TODO - Screen content
         Box(modifier = Modifier.fillMaxSize(),
             contentAlignment = Alignment.Center) {
-            Text(text = "PatientDetailsScreen")
+            Text(text = "PatientDetailsScreen ID: ${state.patientId ?: -1}")
         }
     }
 

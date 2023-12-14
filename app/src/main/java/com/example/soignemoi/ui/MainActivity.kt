@@ -13,13 +13,16 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.example.soignemoi.feature.add_note.presentation.AddNoteScreen
 import com.example.soignemoi.feature.add_note.presentation.AddNoteViewModel
 import com.example.soignemoi.feature.login.presentation.LoginScreen
 import com.example.soignemoi.feature.login.presentation.LoginViewModel
+import com.example.soignemoi.feature.patient_details.presentation.PatientDetailsEvent
 import com.example.soignemoi.feature.patient_details.presentation.PatientDetailsScreen
 import com.example.soignemoi.feature.patient_details.presentation.PatientDetailsViewModel
 import com.example.soignemoi.feature.patient_list.presentation.PatientsListScreen
@@ -65,7 +68,12 @@ class MainActivity : ComponentActivity() {
                                 onEvent = viewModel::onEvent
                             )
                         }
-                        composable(Screen.PatientDetails.route) {
+                        composable(Screen.PatientDetails.route + "?patientId={patientId}",
+                            arguments = listOf(navArgument(name = "patientId") {
+                                type = NavType.IntType
+                                defaultValue = -1
+                            })
+                        ) {
                             val viewModel = hiltViewModel<PatientDetailsViewModel>()
                             val state by viewModel.state.collectAsState()
                             PatientDetailsScreen(

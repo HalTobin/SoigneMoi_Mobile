@@ -33,6 +33,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.soignemoi.R
+import com.example.soignemoi.feature.prescription.presentation.component.AddEntryDialog
 import com.example.soignemoi.feature.prescription.presentation.component.MyDatePickerDialog
 import com.example.soignemoi.feature.prescription.presentation.component.getTimestampForMidnight
 import com.example.soignemoi.ui.composable.PatientHeader
@@ -50,6 +51,7 @@ fun PrescriptionScreen(
 
     var isStartDatePickerOpen by remember { mutableStateOf(false) }
     var isEndDatePickerOpen by remember { mutableStateOf(false) }
+    var isAddEntryOpen by remember { mutableStateOf(false) }
 
     Scaffold {
 
@@ -69,6 +71,14 @@ fun PrescriptionScreen(
                 isEndDatePickerOpen = false
             },
             onDismiss = { isEndDatePickerOpen = false }
+        )
+
+        if (isAddEntryOpen) AddEntryDialog(
+            medicines = state.medicines,
+            onAdd = {
+                isAddEntryOpen = false
+            },
+            onDismiss = { isAddEntryOpen = false }
         )
 
         state.patientData?.let { data ->
@@ -96,7 +106,7 @@ fun PrescriptionScreen(
                         Column(modifier = Modifier.fillMaxWidth(),
                             horizontalAlignment = Alignment.CenterHorizontally) {
                             OutlinedButton(
-                                onClick = { /*TODO*/ }) {
+                                onClick = { isAddEntryOpen = true }) {
                                 Icon(Icons.Default.Add, null)
                                 Text(text = stringResource(id = R.string.add_medicine))
                             }

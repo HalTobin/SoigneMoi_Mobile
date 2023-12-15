@@ -17,5 +17,9 @@
     <string name="date_start">Date début</string>
     <string name="date_end">Date fin</string>
     <string name="select">Sélectionner</string>
+    <string name="add">Ajouter</string>
     <string name="cancel">Retour</string>
+    <string name="dosage">Dosage</string>
+    <string name="frequency">Fréquence</string>
+    <string name="instructions">Instructions</string>
 </resources>

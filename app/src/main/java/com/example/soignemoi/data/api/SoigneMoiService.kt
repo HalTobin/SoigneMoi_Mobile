@@ -1,5 +1,6 @@
 package com.example.soignemoi.data.api
 
+import com.example.soignemoi.data.model.Medicine
 import com.example.soignemoi.data.model.Note
 import com.example.soignemoi.data.model.NoteDto
 import com.example.soignemoi.data.model.Patient
@@ -20,5 +21,8 @@ interface SoigneMoiService {
 
     @POST("doctor/new_note")
     suspend fun addNote(@Body noteDto: NoteDto): Response<Note?>
+
+    @GET("doctor/medicines")
+    suspend fun getMedicines(): Response<List<Medicine>>
 
 }

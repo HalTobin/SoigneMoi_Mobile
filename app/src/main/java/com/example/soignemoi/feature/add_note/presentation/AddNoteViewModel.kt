@@ -42,7 +42,7 @@ class AddNoteViewModel @Inject constructor(
             is AddNoteEvent.UpdateTitle -> _state.update { it.copy(title = event.text) }
             is AddNoteEvent.UpdateContent -> _state.update { it.copy(content = event.text) }
             is AddNoteEvent.SaveNote -> viewModelScope.launch {
-                _state.value.patientData?.let { data ->
+                if (_state.value.title.isNotBlank() && _state.value.content.isNotBlank()) _state.value.patientData?.let { data ->
                     if (patientRepository.addNote(NoteDto(
                         appointmentId = data.appointment.id,
                         doctorId = data.doctor.id,

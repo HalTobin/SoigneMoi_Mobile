@@ -11,4 +11,11 @@
     <string name="note_title">Intitulé</string>
     <string name="note_content">Contenu</string>
     <string name="save">Enregistrer</string>
+    <string name="prescription_n">Prescription n°%d</string>
+    <string name="new_prescription">Nouvelle prescription</string>
+    <string name="add_medicine">Ajouter un médicament</string>
+    <string name="date_start">Date début</string>
+    <string name="date_end">Date fin</string>
+    <string name="select">Sélectionner</string>
+    <string name="cancel">Retour</string>
 </resources>

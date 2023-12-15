@@ -5,7 +5,8 @@ data class PrescriptionEntry(
     val prescriptionId: Int,
     val dosage: Int,
     val frequency: Frequency,
-    val note: String
+    val note: String,
+    val medicine: Medicine
 )
 
 enum class Frequency { DAILY, WEEKLY, MONTHLY }

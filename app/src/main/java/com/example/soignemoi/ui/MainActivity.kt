@@ -101,7 +101,8 @@ class MainActivity : ComponentActivity() {
                             AddNoteScreen(
                                 navController = navController,
                                 state = state,
-                                onEvent = viewModel::onEvent
+                                onEvent = viewModel::onEvent,
+                                uiEvent = viewModel.eventFlow
                             )
                         }
                         composable(Screen.Prescription.route + "?patientId={patientId}&noteId={noteId}",

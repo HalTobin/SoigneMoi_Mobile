@@ -26,8 +26,7 @@ class PatientDetailsViewModel @Inject constructor(
     }
 
     private fun loadPatient(patientId: Int) = viewModelScope.launch(Dispatchers.IO) {
-        _state.update { it.copy(patientId = patientId) }
-        patientRepository.getPatientDetails(patientId)
+        _state.update { it.copy(patientId = patientId, patientData = patientRepository.getPatientDetails(patientId)) }
     }
 
     fun onEvent(event: PatientDetailsEvent) {

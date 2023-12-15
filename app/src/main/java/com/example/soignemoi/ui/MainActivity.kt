@@ -91,7 +91,11 @@ class MainActivity : ComponentActivity() {
                                 onEvent = viewModel::onEvent
                             )
                         }
-                        composable(Screen.AddNote.route) {
+                        composable(Screen.AddNote.route + "?patientId={patientId}",
+                            arguments = listOf(navArgument(name = "patientId") {
+                                type = NavType.IntType
+                                defaultValue = -1
+                            })) {
                             val viewModel = hiltViewModel<AddNoteViewModel>()
                             val state by viewModel.state.collectAsState()
                             AddNoteScreen(
@@ -100,7 +104,15 @@ class MainActivity : ComponentActivity() {
                                 onEvent = viewModel::onEvent
                             )
                         }
-                        composable(Screen.Prescription.route) {
+                        composable(Screen.Prescription.route + "?patientId={patientId}&noteId={noteId}",
+                            arguments = listOf(navArgument(name = "patientId") {
+                                type = NavType.IntType
+                                defaultValue = -1
+                            }, navArgument(name = "noteId") {
+                                type = NavType.IntType
+                                defaultValue = -1
+                            }
+                            )) {
                             val viewModel = hiltViewModel<PrescriptionViewModel>()
                             val state by viewModel.state.collectAsState()
                             PrescriptionScreen(

@@ -22,7 +22,7 @@ import com.example.soignemoi.ui.composable.shimmerEffect
 
 @Composable
 fun PatientItem(
-    modifier: Modifier,
+    modifier: Modifier = Modifier,
     patient: Patient
 ) {
 

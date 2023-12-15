@@ -52,21 +52,18 @@ fun PatientsListScreen(
                         imageVector = Icons.Default.Refresh, contentDescription = null)
                 }
             }
-            HorizontalDivider(modifier = Modifier
-                .fillMaxWidth()
-                .padding(vertical = 4.dp))
+            HorizontalDivider(modifier = Modifier.fillMaxWidth().padding(top = 4.dp))
             LazyColumn {
                 if (!state.loading) itemsIndexed(state.patients) { index, patient ->
-                    PatientItem(
-                        modifier = Modifier
-                            .clickable {
-                                navController.navigate(Screen.PatientDetails.route + "?patientId=${patient.id}")
-                                       },
-                        patient = patient
-                    )
-                    if (index < state.patients.lastIndex) HorizontalDivider(modifier = Modifier
-                        .padding(horizontal = 8.dp)
-                        .fillMaxWidth())
+                    Column(modifier = Modifier
+                        .clickable {
+                            navController.navigate(Screen.PatientDetails.route + "?patientId=${patient.id}")
+                        }) {
+                        PatientItem(patient = patient)
+                        if (index < state.patients.lastIndex) HorizontalDivider(modifier = Modifier
+                            .padding(horizontal = 8.dp)
+                            .fillMaxWidth())
+                    }
                 } else items(4) { LoadingPatientItem() }
             }
         }

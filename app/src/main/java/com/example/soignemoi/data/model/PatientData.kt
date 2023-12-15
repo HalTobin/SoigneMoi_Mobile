@@ -6,6 +6,7 @@ data class PatientData(
     val id: Int,
     val name: String,
     val surname: String,
+    val reason: String,
     val specialty: Specialty,
     val startDate: Date,
     val endDate: Date,

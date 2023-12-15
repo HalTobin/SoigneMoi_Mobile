@@ -20,10 +20,12 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.example.soignemoi.R
 import com.example.soignemoi.feature.patient_list.presentation.component.LoadingPatientItem
 import com.example.soignemoi.feature.patient_list.presentation.component.PatientItem
 import com.example.soignemoi.ui.Screen
@@ -41,7 +43,7 @@ fun PatientsListScreen(
             Box(modifier = Modifier.fillMaxWidth()) {
                 Text(
                     modifier = Modifier.align(Alignment.Center),
-                    text = "Mes patients".uppercase(),
+                    text = stringResource(id = R.string.my_patients).uppercase(),
                     style = MaterialTheme.typography.titleLarge,
                     fontWeight = FontWeight.Bold,
                     textAlign = TextAlign.Center
@@ -52,7 +54,9 @@ fun PatientsListScreen(
                         imageVector = Icons.Default.Refresh, contentDescription = null)
                 }
             }
-            HorizontalDivider(modifier = Modifier.fillMaxWidth().padding(top = 4.dp))
+            HorizontalDivider(modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 4.dp))
             LazyColumn {
                 if (!state.loading) itemsIndexed(state.patients) { index, patient ->
                     Column(modifier = Modifier

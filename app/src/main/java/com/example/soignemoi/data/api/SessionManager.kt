@@ -26,7 +26,7 @@ class SessionManager @Inject constructor(
         try {
             val response = api.login(credentials)
             tokenRetrievedTime = System.currentTimeMillis()
-            if (response.isSuccessful ) {
+            if (response.isSuccessful) {
                 // Extract the token from the response
                 val tokenResponse = response.body()
 

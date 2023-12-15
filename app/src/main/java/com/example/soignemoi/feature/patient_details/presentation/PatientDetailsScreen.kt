@@ -30,6 +30,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.soignemoi.feature.patient_details.presentation.PatientDetailsTab.Companion.TAB_ITEMS
 import com.example.soignemoi.ui.Screen
+import com.example.soignemoi.ui.composable.PatientHeader
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -68,16 +69,7 @@ fun PatientDetailsScreen(
     ) {
         state.patientData?.let {
             Column(modifier = Modifier.fillMaxWidth()) {
-                Text(
-                    modifier = Modifier.padding(start = 8.dp, end = 8.dp, top = 4.dp),
-                    text = state.getPatientFullName(),
-                    style = MaterialTheme.typography.headlineMedium
-                )
-                Text(
-                    modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp),
-                    text = state.patientData.reason,
-                    style = MaterialTheme.typography.titleMedium
-                )
+                PatientHeader(patient = state.patientData)
                 HorizontalDivider(modifier = Modifier.fillMaxWidth())
                 TabRow(selectedTabIndex = selectedTabIndex) {
                     TAB_ITEMS.forEach() { item ->

@@ -93,6 +93,7 @@ fun LoginScreen(
                 OutlinedTextField(
                     modifier = Modifier.fillMaxWidth(),
                     label = { Text(text = stringResource(id = R.string.username)) },
+                    singleLine = true,
                     keyboardOptions = KeyboardOptions(
                         capitalization = KeyboardCapitalization.Characters
                     ),
@@ -103,6 +104,7 @@ fun LoginScreen(
                 OutlinedTextField(
                     modifier = Modifier.fillMaxWidth(),
                     label = { Text(text = stringResource(id = R.string.password)) },
+                    singleLine = true,
                     visualTransformation =  if (state.showPassword) VisualTransformation.None else PasswordVisualTransformation(),
                     keyboardOptions = KeyboardOptions(
                         autoCorrect = false,

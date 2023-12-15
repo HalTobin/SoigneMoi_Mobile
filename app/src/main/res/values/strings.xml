@@ -6,4 +6,9 @@
     <string name="connection">Connexion</string>
     <string name="remember_login">Enregistrer les identifiants</string>
     <string name="error_occured">Une erreur est survenue</string>
+    <string name="my_patients">Mes patients</string>
+    <string name="new_note">Nouvelle note</string>
+    <string name="note_title">Intitulé</string>
+    <string name="note_content">Contenu</string>
+    <string name="save">Enregistrer</string>
 </resources>

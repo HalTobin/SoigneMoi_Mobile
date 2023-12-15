@@ -13,22 +13,25 @@ import javax.inject.Inject
 
 @HiltViewModel
 class PatientsListViewModel @Inject constructor(
-    private val patientRepository: PatientRepository
+    private val patientRepository: PatientRepository,
 ): ViewModel() {
 
     private val _state = MutableStateFlow(PatientsListState())
     val state = _state.asStateFlow()
 
     init {
-        viewModelScope.launch(Dispatchers.IO) {
-            _state.update { it.copy(patients = patientRepository.getMyPatients()) }
-        }
+        refreshPatientList()
+    }
+
+    private fun refreshPatientList() = viewModelScope.launch(Dispatchers.IO) {
+        _state.update { it.copy(loading = true) }
+        _state.update { it.copy(patients = patientRepository.getMyPatients()) }
+        _state.update { it.copy(loading = false) }
     }
 
     fun onEvent(event: PatientsListEvent) {
         when (event) {
-            // TODO - Add all events
-            else -> {}
+            is PatientsListEvent.Refresh -> refreshPatientList()
         }
     }
 

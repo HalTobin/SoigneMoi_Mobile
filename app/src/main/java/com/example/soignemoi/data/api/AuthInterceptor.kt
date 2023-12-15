@@ -1,6 +1,5 @@
 package com.example.soignemoi.data.api
 
-import com.example.soignemoi.di.NetworkModule
 import kotlinx.coroutines.runBlocking
 import okhttp3.Interceptor
 import okhttp3.Response
@@ -21,8 +20,6 @@ class AuthInterceptor @Inject constructor(
 
         val requestBuilder = original.newBuilder()
             .addHeader("Authorization", "Bearer $token")
-            //.url(original.url)
-            //.url(NetworkModule.BASE_URL + "auth/login")
 
         val request = requestBuilder.build()
         val response = chain.proceed(request)

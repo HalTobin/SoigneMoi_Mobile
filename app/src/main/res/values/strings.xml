@@ -20,6 +20,12 @@
     <string name="add">Ajouter</string>
     <string name="cancel">Retour</string>
     <string name="dosage">Dosage</string>
+    <string name="error">Erreur</string>
+    <string name="medicine">Médicament</string>
     <string name="frequency">Fréquence</string>
     <string name="instructions">Instructions</string>
+    <string name="search">Recherche…</string>
+    <string name="daily">Jour</string>
+    <string name="weekly">Semaine</string>
+    <string name="monthly">Mois</string>
 </resources>

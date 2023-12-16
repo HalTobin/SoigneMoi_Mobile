@@ -3,16 +3,16 @@ package com.example.soignemoi.feature.prescription.presentation
 import com.example.soignemoi.data.model.Medicine
 import com.example.soignemoi.data.model.PatientData
 import com.example.soignemoi.data.model.PrescriptionEntry
+import com.example.soignemoi.feature.prescription.data.NewEntry
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
 data class PrescriptionState(
     val loading: Boolean = false,
-    val patientId: Int = -1,
-    val patientData: PatientData? = null,
     val prescriptionId: Int? = null,
-    val entries: List<PrescriptionEntry> = emptyList(),
+    val appointmentId: Int? = null,
+    val entries: List<NewEntry> = emptyList(),
     val dateStart: Date? = null,
     val dateEnd: Date? = null,
     val medicines: List<Medicine> = emptyList()

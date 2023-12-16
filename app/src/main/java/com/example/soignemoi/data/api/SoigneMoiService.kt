@@ -5,6 +5,7 @@ import com.example.soignemoi.data.model.Note
 import com.example.soignemoi.data.model.NoteDto
 import com.example.soignemoi.data.model.Patient
 import com.example.soignemoi.data.model.PatientData
+import com.example.soignemoi.feature.prescription.data.NewPrescription
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -24,5 +25,8 @@ interface SoigneMoiService {
 
     @GET("doctor/medicines")
     suspend fun getMedicines(): Response<List<Medicine>>
+
+    @GET("doctor/get_prescription")
+    suspend fun getPrescription(prescriptionId: Int): Response<NewPrescription>
 
 }

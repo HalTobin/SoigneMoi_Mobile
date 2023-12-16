@@ -77,66 +77,65 @@ fun PrescriptionScreen(
             medicines = state.medicines,
             onAdd = {
                 isAddEntryOpen = false
+                onEvent(PrescriptionEvent.AddEntry(it))
             },
             onDismiss = { isAddEntryOpen = false }
         )
 
-        state.patientData?.let { data ->
-            Column(modifier = Modifier.fillMaxSize(),
-                horizontalAlignment = Alignment.CenterHorizontally) {
-                PatientHeader(patient = data)
-                Text(
-                    modifier = Modifier
-                        .padding(vertical = 8.dp)
-                        .fillMaxWidth(),
-                    text =
-                        if (state.prescriptionId == null) stringResource(id = R.string.new_prescription).uppercase()
-                        else stringResource(id = R.string.prescription_n, state.prescriptionId).uppercase(),
-                    textAlign = TextAlign.Center,
-                    style = MaterialTheme.typography.headlineMedium
-                )
+        Column(modifier = Modifier.fillMaxSize(),
+            horizontalAlignment = Alignment.CenterHorizontally) {
+            Text(
+                modifier = Modifier
+                    .padding(vertical = 8.dp)
+                    .fillMaxWidth(),
+                text =
+                    if (state.prescriptionId == null) stringResource(id = R.string.new_prescription).uppercase()
+                    else stringResource(id = R.string.prescription_n, state.prescriptionId).uppercase(),
+                textAlign = TextAlign.Center,
+                style = MaterialTheme.typography.headlineMedium
+            )
 
-                LazyColumn(modifier = Modifier
-                    .fillMaxWidth()
-                    .weight(1f)) {
-                    items(state.entries) { entry ->
-                        Text(text = entry.medicine.title)
-                    }
-                    item {
-                        Column(modifier = Modifier.fillMaxWidth(),
-                            horizontalAlignment = Alignment.CenterHorizontally) {
-                            OutlinedButton(
-                                onClick = { isAddEntryOpen = true }) {
-                                Icon(Icons.Default.Add, null)
-                                Text(text = stringResource(id = R.string.add_medicine))
-                            }
+            LazyColumn(modifier = Modifier
+                .fillMaxWidth()
+                .weight(1f)) {
+                items(state.entries) { entry ->
+                    Text(text = state.medicines.find { entry.medicineId == it.id }?.title ?: "")
+                }
+                item {
+                    Column(modifier = Modifier.fillMaxWidth(),
+                        horizontalAlignment = Alignment.CenterHorizontally) {
+                        OutlinedButton(
+                            onClick = { isAddEntryOpen = true }) {
+                            Icon(Icons.Default.Add, null)
+                            Text(text = stringResource(id = R.string.add_medicine))
                         }
                     }
                 }
-                Row {
-                    Button(modifier = Modifier
-                        .weight(1f)
-                        .padding(start = 8.dp, end = 4.dp),
-                        enabled = (state.prescriptionId == null),
-                        onClick = { isStartDatePickerOpen = true }) {
-                        Text(modifier = Modifier.padding(start = 4.dp),
-                            text =
-                            if (state.dateStart == null) stringResource(id = R.string.date_start)
-                            else state.startFormatted
-                        )
-                    }
-                    Button(modifier = Modifier
-                        .weight(1f)
-                        .padding(start = 4.dp, end = 8.dp),
-                        onClick = { isEndDatePickerOpen = true }) {
-                        Text(text =
-                            if (state.dateEnd == null) stringResource(id = R.string.date_end)
-                            else state.endFormatted
-                        )
-                    }
+            }
+            Row {
+                Button(modifier = Modifier
+                    .weight(1f)
+                    .padding(start = 8.dp, end = 4.dp),
+                    enabled = (state.prescriptionId == null),
+                    onClick = { isStartDatePickerOpen = true }) {
+                    Text(modifier = Modifier.padding(start = 4.dp),
+                        text =
+                        if (state.dateStart == null) stringResource(id = R.string.date_start)
+                        else state.startFormatted
+                    )
+                }
+                Button(modifier = Modifier
+                    .weight(1f)
+                    .padding(start = 4.dp, end = 8.dp),
+                    onClick = { isEndDatePickerOpen = true }) {
+                    Text(text =
+                        if (state.dateEnd == null) stringResource(id = R.string.date_end)
+                        else state.endFormatted
+                    )
                 }
             }
         }
+
     }
 
 }

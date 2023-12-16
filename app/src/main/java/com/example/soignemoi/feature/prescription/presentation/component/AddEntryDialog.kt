@@ -24,6 +24,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import com.example.soignemoi.R
+import com.example.soignemoi.data.model.Frequency
 import com.example.soignemoi.data.model.Medicine
 import com.example.soignemoi.feature.prescription.data.NewEntry
 
@@ -34,17 +35,7 @@ fun AddEntryDialog(
     onDismiss: () -> Unit
 ) {
 
-    var isSelectMedicineOpen by remember { mutableStateOf(false) }
-
     var entry by remember { mutableStateOf(NewEntry()) }
-
-    if (isSelectMedicineOpen) SelectMedicineDialog(
-        medicines = medicines,
-        onSelect = {
-            entry = entry.copy(medicine = it)
-            isSelectMedicineOpen = false
-        },
-        onDismiss = { isSelectMedicineOpen = false })
 
     Dialog(
         onDismissRequest = onDismiss
@@ -55,16 +46,30 @@ fun AddEntryDialog(
             Column(modifier = Modifier
                 .padding(8.dp)
                 .fillMaxHeight(0.85f)) {
+                MedicinePicker(
+                    medicines = medicines,
+                    onSelect = { entry = entry.copy(medicineId = it) }
+                )
                 Row(modifier = Modifier.fillMaxWidth()) {
                     OutlinedTextField(
-                        modifier = Modifier.fillMaxWidth(),
+                        modifier = Modifier
+                            .weight(1f)
+                            .padding(end = 4.dp),
                         label = { Text(text = stringResource(id = R.string.dosage)) },
                         singleLine = true,
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                         value = entry.dosage,
                         onValueChange = { entry = entry.copy(dosage = it) }
                     )
-
+                    BasicExposedDropDown(
+                        modifier = Modifier
+                            .weight(1f)
+                            .padding(start = 4.dp),
+                        label = stringResource(id = R.string.frequency),
+                        items = Frequency.all.map { BasicDropDownItem(it.id, it.title) },
+                        text = Frequency.getFromId(entry.frequency).title,
+                        onSelect = { entry = entry.copy(frequency = it) }
+                    )
                 }
                 OutlinedTextField(
                     modifier = Modifier
@@ -72,7 +77,6 @@ fun AddEntryDialog(
                         .weight(1f),
                     label = { Text(text = stringResource(id = R.string.instructions)) },
                     singleLine = false,
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                     value = entry.note,
                     onValueChange = { entry = entry.copy(note = it) }
                 )

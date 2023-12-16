@@ -5,13 +5,13 @@ import com.example.soignemoi.data.model.Medicine
 
 data class NewEntry(
     val dosage: String = "1",
-    val frequency: Frequency = Frequency.DAILY,
+    val frequency: Int = Frequency.DAILY.id,
     val note: String = "",
-    val medicine: Medicine? = null
+    val medicineId: Int? = null
 ) {
     val isFilled: Boolean get() {
         dosage.toIntOrNull()?.let { dosageInt ->
-            return (dosageInt != 0 && medicine != null)
+            return (dosageInt != 0 && medicineId != null)
         }
         return false
     }

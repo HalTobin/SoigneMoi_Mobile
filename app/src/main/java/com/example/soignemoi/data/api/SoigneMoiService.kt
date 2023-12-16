@@ -29,4 +29,7 @@ interface SoigneMoiService {
     @GET("doctor/get_prescription")
     suspend fun getPrescription(prescriptionId: Int): Response<NewPrescription>
 
+    @POST("doctor/save_prescription")
+    suspend fun savePrescription(@Body prescription: NewPrescription): Response<Boolean>
+
 }

@@ -15,7 +15,8 @@ data class PrescriptionState(
     val entries: List<NewEntry> = emptyList(),
     val dateStart: Date? = null,
     val dateEnd: Date? = null,
-    val medicines: List<Medicine> = emptyList()
+    val medicines: List<Medicine> = emptyList(),
+    val edited: Boolean = false
 ) {
 
     val startFormatted: String get() = simpleDateFormat(dateStart) ?: ""
@@ -29,5 +30,8 @@ data class PrescriptionState(
         }
         return null
     }
+
+    fun canSave(): Boolean =
+        ((dateStart != null) && (dateEnd != null) && entries.isNotEmpty() && (appointmentId != null))
 
 }

@@ -15,4 +15,7 @@ data class NewEntry(
         }
         return false
     }
+
+    fun medicineTitle(medicines: List<Medicine>): String = medicines.find { it.id == medicineId }?.title ?: ""
+
 }

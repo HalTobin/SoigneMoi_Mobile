@@ -2,6 +2,7 @@ package com.example.soignemoi.feature.prescription.presentation
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -35,6 +36,7 @@ import androidx.navigation.NavController
 import com.example.soignemoi.R
 import com.example.soignemoi.feature.prescription.presentation.component.AddEntryDialog
 import com.example.soignemoi.feature.prescription.presentation.component.MyDatePickerDialog
+import com.example.soignemoi.feature.prescription.presentation.component.PrescriptionEntryItem
 import com.example.soignemoi.feature.prescription.presentation.component.getTimestampForMidnight
 import com.example.soignemoi.ui.composable.PatientHeader
 import java.text.SimpleDateFormat
@@ -95,11 +97,18 @@ fun PrescriptionScreen(
                 style = MaterialTheme.typography.headlineMedium
             )
 
-            LazyColumn(modifier = Modifier
-                .fillMaxWidth()
-                .weight(1f)) {
+            LazyColumn(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .weight(1f),
+                contentPadding = PaddingValues(horizontal = 16.dp)
+            ) {
                 items(state.entries) { entry ->
-                    Text(text = state.medicines.find { entry.medicineId == it.id }?.title ?: "")
+                    PrescriptionEntryItem(
+                        medicines = state.medicines,
+                        entry = entry,
+                        select = { TODO() }
+                    )
                 }
                 item {
                     Column(modifier = Modifier.fillMaxWidth(),
@@ -134,8 +143,18 @@ fun PrescriptionScreen(
                     )
                 }
             }
+            Button(modifier = Modifier
+                .fillMaxWidth(1f)
+                .padding(start = 4.dp, end = 8.dp),
+                enabled = state.canSave(),
+                onClick = {
+                    onEvent(PrescriptionEvent.Save)
+                }) {
+                Text(text = stringResource(id = R.string.save).uppercase())
         }
 
     }
+
+}
 
 }

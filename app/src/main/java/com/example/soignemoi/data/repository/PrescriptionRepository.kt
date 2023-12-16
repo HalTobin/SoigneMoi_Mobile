@@ -21,8 +21,14 @@ class PrescriptionRepositoryImpl @Inject constructor(
         }
     }
 
+    override suspend fun savePrescription(prescription: NewPrescription) {
+        api.savePrescription(prescription)
+    }
+
 }
 
 interface PrescriptionRepository {
     suspend fun getPrescription(prescriptionId: Int): NewPrescription?
+
+    suspend fun savePrescription(prescription: NewPrescription)
 }

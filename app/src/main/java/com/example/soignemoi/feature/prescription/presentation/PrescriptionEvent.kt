@@ -7,4 +7,5 @@ sealed class PrescriptionEvent {
     data class SelectStartDate(val date: Date): PrescriptionEvent()
     data class SelectEndDate(val date: Date): PrescriptionEvent()
     data class AddEntry(val entry: NewEntry): PrescriptionEvent()
+    object Save: PrescriptionEvent()
 }

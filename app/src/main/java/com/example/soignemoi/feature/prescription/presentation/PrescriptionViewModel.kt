@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.soignemoi.data.repository.MedicineRepository
 import com.example.soignemoi.data.repository.PrescriptionRepository
+import com.example.soignemoi.feature.prescription.data.NewPrescription
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -51,6 +52,18 @@ class PrescriptionViewModel @Inject constructor(
                 val entries = _state.value.entries.toMutableList()
                 entries.add(event.entry)
                 _state.update { it.copy(entries = entries.toList()) }
+            }
+            is PrescriptionEvent.Save -> viewModelScope.launch {
+                if (_state.value.canSave()) {
+                    val newPrescription = NewPrescription(
+                        id = _state.value.prescriptionId,
+                        appointmentId = state.value.appointmentId!!,
+                        start = state.value.dateStart!!,
+                        end = state.value.dateEnd!!,
+                        entries = state.value.entries
+                    )
+                    prescriptionRepository.savePrescription(newPrescription)
+                }
             }
         }
     }

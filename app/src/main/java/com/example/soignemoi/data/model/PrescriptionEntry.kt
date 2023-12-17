@@ -5,10 +5,9 @@ import androidx.compose.ui.res.stringResource
 import com.example.soignemoi.R
 
 data class PrescriptionEntry(
-    val id: Int?,
     val prescriptionId: Int,
     val dosage: Int,
-    val frequency: Frequency,
+    val frequency: Int,
     val note: String,
     val medicine: Medicine
 )

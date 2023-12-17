@@ -1,6 +1,5 @@
 package com.example.soignemoi.feature.patient_details.presentation.components
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
@@ -24,7 +23,7 @@ fun NotePage(
             modifier = modifier.fillMaxSize(),
             contentPadding = PaddingValues(8.dp)
         ) {
-            items(data.notes) { note ->
+            items(data.notes.sortedByDescending { it.date }) { note ->
                 Column {
                     NoteItem(note = note)
                     Spacer(modifier = Modifier.height(8.dp))

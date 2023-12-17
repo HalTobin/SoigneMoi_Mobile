@@ -10,16 +10,27 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.res.pluralStringResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.example.soignemoi.data.model.Note
+import com.example.soignemoi.R
+import com.example.soignemoi.data.model.Prescription
 import com.example.soignemoi.util.DateUtil.formattedDate
+import com.example.soignemoi.util.DateUtil.howManyDays
 
 @Composable
-fun NoteItem(
+fun PrescriptionItem(
     modifier: Modifier = Modifier,
-    note: Note
+    prescription: Prescription
 ) {
+
+    @Composable
+    fun Prescription.getDateString(): String {
+        val days = howManyDays(this.start, this.end)
+        return "${this.start.formattedDate} - ${this.end.formattedDate} : ${pluralStringResource(id = R.plurals.day, days, days)}"
+    }
 
     Column {
         Column(modifier = modifier
@@ -30,14 +41,14 @@ fun NoteItem(
         ) {
             Text(
                 modifier = Modifier.padding(horizontal = 8.dp),
-                text = note.title,
-                style = MaterialTheme.typography.headlineMedium)
-            Text(
-                modifier = Modifier.padding(horizontal = 8.dp),
-                text = note.content,
-                style = MaterialTheme.typography.bodyMedium)
-            Text(modifier = Modifier.padding(horizontal = 8.dp).fillMaxWidth(),
-                text = note.date.formattedDate,
+                text = prescription.getMedicinesAsString(),
+                style = MaterialTheme.typography.bodyLarge,
+                fontWeight = FontWeight.SemiBold
+            )
+            Text(modifier = Modifier
+                .padding(horizontal = 8.dp)
+                .fillMaxWidth(),
+                text = prescription.getDateString(),
                 style = MaterialTheme.typography.bodyMedium,
                 textAlign = TextAlign.End)
         }

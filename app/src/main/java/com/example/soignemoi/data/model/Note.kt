@@ -12,14 +12,7 @@ data class Note(
     val title: String,
     val content: String,
     val date: Date
-) {
-
-    fun getFormattedDate(): String {
-        val dateFormat = SimpleDateFormat("dd MMMM yyyy", Locale("fr", "FR"))
-        return dateFormat.format(date)
-    }
-
-}
+)
 
 data class NoteDto(
     val appointmentId: Int,

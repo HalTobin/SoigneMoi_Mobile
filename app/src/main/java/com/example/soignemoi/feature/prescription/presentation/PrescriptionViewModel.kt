@@ -4,8 +4,10 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.soignemoi.data.repository.MedicineRepository
+import com.example.soignemoi.data.repository.PatientRepository
 import com.example.soignemoi.data.repository.PrescriptionRepository
 import com.example.soignemoi.feature.prescription.data.NewPrescription
+import com.example.soignemoi.feature.prescription.data.asString
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -17,6 +19,7 @@ import javax.inject.Inject
 class PrescriptionViewModel @Inject constructor(
     private val medicineRepository: MedicineRepository,
     private val prescriptionRepository: PrescriptionRepository,
+    private val patientRepository: PatientRepository,
     savedStateHandle: SavedStateHandle
 ): ViewModel() {
 
@@ -35,8 +38,8 @@ class PrescriptionViewModel @Inject constructor(
                         _state.update { it.copy(
                             prescriptionId = prescription.id,
                             entries = prescription.entries,
-                            dateStart = prescription.start,
-                            dateEnd = prescription.end
+                            //dateStart = prescription.start,
+                            //dateEnd = prescription.end
                         ) }
                     }
                 }
@@ -58,11 +61,11 @@ class PrescriptionViewModel @Inject constructor(
                     val newPrescription = NewPrescription(
                         id = _state.value.prescriptionId,
                         appointmentId = state.value.appointmentId!!,
-                        start = state.value.dateStart!!,
-                        end = state.value.dateEnd!!,
+                        start = state.value.dateStart!!.asString,
+                        end = state.value.dateEnd!!.asString,
                         entries = state.value.entries
                     )
-                    prescriptionRepository.savePrescription(newPrescription)
+                    patientRepository.savePrescription(newPrescription)
                 }
             }
         }

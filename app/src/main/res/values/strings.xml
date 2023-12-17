@@ -28,4 +28,9 @@
     <string name="daily">Jour</string>
     <string name="weekly">Semaine</string>
     <string name="monthly">Mois</string>
+
+    <plurals name="day">
+        <item quantity="one">%d Jour</item>
+        <item quantity="other">%d Jours</item>
+    </plurals>
 </resources>

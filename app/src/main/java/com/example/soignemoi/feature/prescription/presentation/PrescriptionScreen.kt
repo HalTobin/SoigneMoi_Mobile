@@ -149,6 +149,7 @@ fun PrescriptionScreen(
                 enabled = state.canSave(),
                 onClick = {
                     onEvent(PrescriptionEvent.Save)
+                    navController.popBackStack()
                 }) {
                 Text(text = stringResource(id = R.string.save).uppercase())
         }

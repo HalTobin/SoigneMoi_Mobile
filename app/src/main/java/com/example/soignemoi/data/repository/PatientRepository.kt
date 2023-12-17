@@ -5,6 +5,7 @@ import com.example.soignemoi.data.api.SoigneMoiService
 import com.example.soignemoi.data.model.NoteDto
 import com.example.soignemoi.data.model.Patient
 import com.example.soignemoi.data.model.PatientData
+import com.example.soignemoi.feature.prescription.data.NewPrescription
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -52,6 +53,7 @@ class PatientRepositoryImpl @Inject constructor(
             Log.i("API - Details", result.body()?.toString() ?: "null")
             result.body()
         } catch (e: Exception) {
+            Log.w("API - ERROR", e.message ?: "")
             return null
         }
     }
@@ -71,6 +73,21 @@ class PatientRepositoryImpl @Inject constructor(
         }
     }
 
+    override suspend fun savePrescription(prescription: NewPrescription): Boolean {
+        return try {
+            val request = api.savePrescription(prescription)
+            if (request.isSuccessful) {
+                // Trigger refresh after successful note addition
+                refreshTrigger.emit(Unit)
+                true
+            } else {
+                false
+            }
+        } catch (e: Exception) {
+            false
+        }
+    }
+
 }
 
 interface PatientRepository {
@@ -78,4 +95,5 @@ interface PatientRepository {
     fun getPatientDetailsAsFlow(patientId: Int): Flow<PatientData?>
     suspend fun getPatientDetails(patientId: Int): PatientData?
     suspend fun addNote(note: NoteDto): Boolean
+    suspend fun savePrescription(prescription: NewPrescription): Boolean
 }

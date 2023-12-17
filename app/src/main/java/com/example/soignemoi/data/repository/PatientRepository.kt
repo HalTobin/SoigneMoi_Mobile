@@ -88,6 +88,24 @@ class PatientRepositoryImpl @Inject constructor(
         }
     }
 
+    override suspend fun updatePrescriptionEndDate(
+        prescriptionId: Int,
+        newEndDate: String
+    ): Boolean {
+        return try {
+            val request = api.updatePrescriptionEndDate(prescriptionId, newEndDate)
+            if (request.isSuccessful) {
+                // Trigger refresh after successful note addition
+                refreshTrigger.emit(Unit)
+                true
+            } else {
+                false
+            }
+        } catch (e: Exception) {
+            false
+        }
+    }
+
 }
 
 interface PatientRepository {
@@ -96,4 +114,5 @@ interface PatientRepository {
     suspend fun getPatientDetails(patientId: Int): PatientData?
     suspend fun addNote(note: NoteDto): Boolean
     suspend fun savePrescription(prescription: NewPrescription): Boolean
+    suspend fun updatePrescriptionEndDate(prescriptionId: Int, newEndDate: String): Boolean
 }

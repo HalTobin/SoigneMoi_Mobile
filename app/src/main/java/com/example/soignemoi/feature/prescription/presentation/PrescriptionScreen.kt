@@ -55,6 +55,8 @@ fun PrescriptionScreen(
     var isEndDatePickerOpen by remember { mutableStateOf(false) }
     var isAddEntryOpen by remember { mutableStateOf(false) }
 
+    val isEditable = !((state.prescriptionId != null) && (state.dateEnd?.time ?: -1) < System.currentTimeMillis())
+
     Scaffold {
 
         if (isStartDatePickerOpen) MyDatePickerDialog(
@@ -106,11 +108,10 @@ fun PrescriptionScreen(
                 items(state.entries) { entry ->
                     PrescriptionEntryItem(
                         medicines = state.medicines,
-                        entry = entry,
-                        select = { TODO() }
+                        entry = entry
                     )
                 }
-                item {
+                if (state.prescriptionId == null) item {
                     Column(modifier = Modifier.fillMaxWidth(),
                         horizontalAlignment = Alignment.CenterHorizontally) {
                         OutlinedButton(
@@ -136,6 +137,7 @@ fun PrescriptionScreen(
                 Button(modifier = Modifier
                     .weight(1f)
                     .padding(start = 4.dp, end = 8.dp),
+                    enabled = isEditable,
                     onClick = { isEndDatePickerOpen = true }) {
                     Text(text =
                         if (state.dateEnd == null) stringResource(id = R.string.date_end)
@@ -143,7 +145,7 @@ fun PrescriptionScreen(
                     )
                 }
             }
-            Button(modifier = Modifier
+            if (isEditable) Button(modifier = Modifier
                 .fillMaxWidth(1f)
                 .padding(start = 4.dp, end = 8.dp),
                 enabled = state.canSave(),

@@ -21,12 +21,14 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import com.example.soignemoi.R
 import com.example.soignemoi.data.model.Frequency
 import com.example.soignemoi.data.model.Medicine
 import com.example.soignemoi.feature.prescription.data.NewEntry
+import com.example.soignemoi.util.Constants
 
 @Composable
 fun AddEntryDialog(
@@ -78,7 +80,14 @@ fun AddEntryDialog(
                     label = { Text(text = stringResource(id = R.string.instructions)) },
                     singleLine = false,
                     value = entry.note,
-                    onValueChange = { entry = entry.copy(note = it) }
+                    onValueChange = { if (entry.note.length < Constants.MAX_CHAR) entry = entry.copy(note = it) },
+                    supportingText = {
+                        Text(
+                            text = "${entry.note.length} / ${Constants.MAX_CHAR}",
+                            modifier = Modifier.fillMaxWidth(),
+                            textAlign = TextAlign.End,
+                        )
+                    }
                 )
                 Spacer(modifier = Modifier.height(4.dp))
                 Row {

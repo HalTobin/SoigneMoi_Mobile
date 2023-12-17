@@ -100,6 +100,7 @@ fun PatientDetailsScreen(
                             state = state
                         )
                         PatientDetailsTab.Prescriptions.id -> PrescriptionPage(
+                            navController = navController,
                             modifier = Modifier.fillMaxWidth().weight(1f),
                             state = state
                         )

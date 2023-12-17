@@ -19,4 +19,6 @@ data class Prescription(
         return result
     }
 
+    val isStillUpToDate: Boolean get() = end.time > System.currentTimeMillis()
+
 }

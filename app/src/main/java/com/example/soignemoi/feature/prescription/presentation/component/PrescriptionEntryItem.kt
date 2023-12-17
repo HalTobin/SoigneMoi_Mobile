@@ -24,15 +24,13 @@ import com.example.soignemoi.feature.prescription.data.NewEntry
 fun PrescriptionEntryItem(
     modifier: Modifier = Modifier,
     medicines: List<Medicine>,
-    entry: NewEntry,
-    select: (NewEntry) -> Unit
+    entry: NewEntry
 ) {
 
     Column(
         modifier = modifier
             .clip(RoundedCornerShape(8.dp))
             .background(MaterialTheme.colorScheme.surface)
-            .clickable { select(entry) }
             .padding(8.dp)
     ) {
         Row(modifier = Modifier.fillMaxWidth(),

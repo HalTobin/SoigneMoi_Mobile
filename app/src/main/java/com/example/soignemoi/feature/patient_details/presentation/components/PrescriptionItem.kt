@@ -1,6 +1,7 @@
 package com.example.soignemoi.feature.patient_details.presentation.components
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -10,6 +11,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -23,7 +25,8 @@ import com.example.soignemoi.util.DateUtil.howManyDays
 @Composable
 fun PrescriptionItem(
     modifier: Modifier = Modifier,
-    prescription: Prescription
+    prescription: Prescription,
+    onSelect: (Prescription) -> Unit
 ) {
 
     @Composable
@@ -36,7 +39,8 @@ fun PrescriptionItem(
         Column(modifier = modifier
             .fillMaxWidth()
             .clip(RoundedCornerShape(8.dp))
-            .background(MaterialTheme.colorScheme.surface)
+            .clickable { onSelect(prescription) }
+            .background(if (prescription.isStillUpToDate) MaterialTheme.colorScheme.surface else Color.LightGray)
             .padding(4.dp)
         ) {
             Text(

@@ -8,6 +8,7 @@ import com.example.soignemoi.data.repository.PatientRepository
 import com.example.soignemoi.data.repository.PrescriptionRepository
 import com.example.soignemoi.feature.prescription.data.NewPrescription
 import com.example.soignemoi.feature.prescription.data.asString
+import com.example.soignemoi.util.DateUtil.toDate
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -38,8 +39,8 @@ class PrescriptionViewModel @Inject constructor(
                         _state.update { it.copy(
                             prescriptionId = prescription.id,
                             entries = prescription.entries,
-                            //dateStart = prescription.start,
-                            //dateEnd = prescription.end
+                            dateStart = prescription.start.toDate,
+                            dateEnd = prescription.end.toDate
                         ) }
                     }
                 }
@@ -58,14 +59,22 @@ class PrescriptionViewModel @Inject constructor(
             }
             is PrescriptionEvent.Save -> viewModelScope.launch {
                 if (_state.value.canSave()) {
-                    val newPrescription = NewPrescription(
-                        id = _state.value.prescriptionId,
-                        appointmentId = state.value.appointmentId!!,
-                        start = state.value.dateStart!!.asString,
-                        end = state.value.dateEnd!!.asString,
-                        entries = state.value.entries
-                    )
-                    patientRepository.savePrescription(newPrescription)
+                    if (_state.value.prescriptionId == null) {
+                        val newPrescription = NewPrescription(
+                            id = _state.value.prescriptionId,
+                            appointmentId = state.value.appointmentId!!,
+                            start = state.value.dateStart!!.asString,
+                            end = state.value.dateEnd!!.asString,
+                            entries = state.value.entries
+                        )
+                        patientRepository.savePrescription(newPrescription)
+                    }
+                    else {
+                        if (_state.value.prescriptionId != null && _state.value.dateEnd != null) patientRepository.updatePrescriptionEndDate(
+                            _state.value.prescriptionId!!,
+                            _state.value.dateEnd!!.asString
+                        )
+                    }
                 }
             }
         }

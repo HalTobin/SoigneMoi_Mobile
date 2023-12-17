@@ -1,8 +1,12 @@
 package com.example.soignemoi.di
 
 import com.example.soignemoi.data.api.SoigneMoiService
+import com.example.soignemoi.data.repository.MedicineRepository
+import com.example.soignemoi.data.repository.MedicineRepositoryImpl
 import com.example.soignemoi.data.repository.PatientRepository
 import com.example.soignemoi.data.repository.PatientRepositoryImpl
+import com.example.soignemoi.data.repository.PrescriptionRepository
+import com.example.soignemoi.data.repository.PrescriptionRepositoryImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -18,5 +22,17 @@ object RepositoryModule {
     fun providePatientRepository(
         api: SoigneMoiService
     ): PatientRepository = PatientRepositoryImpl(api)
+
+    @Provides
+    @Singleton
+    fun provideMedicineRepository(
+        api: SoigneMoiService
+    ): MedicineRepository = MedicineRepositoryImpl(api)
+
+    @Provides
+    @Singleton
+    fun providePrescriptionRepository(
+        api: SoigneMoiService
+    ): PrescriptionRepository = PrescriptionRepositoryImpl(api)
 
 }

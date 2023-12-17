@@ -21,6 +21,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.soignemoi.R
 import com.example.soignemoi.ui.composable.PatientHeader
+import com.example.soignemoi.util.Constants.MAX_CHAR
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.collectLatest
 
@@ -69,7 +70,14 @@ fun AddNoteScreen(
                         .padding(horizontal = 8.dp),
                     label = { Text(text = stringResource(id = R.string.note_content)) },
                     value = state.content,
-                    onValueChange = { onEvent(AddNoteEvent.UpdateContent(it)) }
+                    onValueChange = { if (it.length < MAX_CHAR) onEvent(AddNoteEvent.UpdateContent(it)) },
+                    supportingText = {
+                        Text(
+                            text = "${state.content.length} / $MAX_CHAR",
+                            modifier = Modifier.fillMaxWidth(),
+                            textAlign = TextAlign.End,
+                        )
+                    },
                 )
                 Button(
                     modifier = Modifier.fillMaxWidth(0.6f),

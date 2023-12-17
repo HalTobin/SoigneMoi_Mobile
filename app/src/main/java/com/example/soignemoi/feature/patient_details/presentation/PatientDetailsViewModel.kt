@@ -28,7 +28,10 @@ class PatientDetailsViewModel @Inject constructor(
     init {
         savedStateHandle.get<Int>("patientId")?.let { id ->
             viewModelScope.launch {
-                _state.update { it.copy(patientId = id, patientData = patientRepository.getPatientDetails(id)) }
+                _state.update { it.copy(
+                    patientId = id,
+                    patientData = patientRepository.getPatientDetails(id)
+                ) }
             }
             loadPatient(id)
         }

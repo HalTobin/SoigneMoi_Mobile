@@ -1,5 +1,11 @@
 package com.example.soignemoi.feature.prescription.presentation
 
-sealed class PrescriptionEvent {
+import com.example.soignemoi.feature.prescription.data.NewEntry
+import java.util.Date
 
+sealed class PrescriptionEvent {
+    data class SelectStartDate(val date: Date): PrescriptionEvent()
+    data class SelectEndDate(val date: Date): PrescriptionEvent()
+    data class AddEntry(val entry: NewEntry): PrescriptionEvent()
+    object Save: PrescriptionEvent()
 }

@@ -16,7 +16,7 @@ val LightRed = Color(0xFFD87070)
 val Blue40 = Color(0xFF0995D6)
 val BlueGrey40 = Color(0xFF0995D6)
 val BlueAlt40 = Color(0xFF096CD6)
-val BlueSurface= Color(0xFFB7E8FF)
+val BlueSurface= Color(0xFFCFF0FF)
 
 val Blue80 = Color(0xFF69CFFF)
 val BlueGrey80 = Color(0xFF5DA8CA)

@@ -31,6 +31,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.soignemoi.feature.patient_details.presentation.PatientDetailsTab.Companion.TAB_ITEMS
 import com.example.soignemoi.feature.patient_details.presentation.components.NotePage
+import com.example.soignemoi.feature.patient_details.presentation.components.PrescriptionPage
 import com.example.soignemoi.ui.Screen
 import com.example.soignemoi.ui.composable.PatientHeader
 import kotlinx.coroutines.launch
@@ -61,7 +62,7 @@ fun PatientDetailsScreen(
                 modifier = Modifier.size(64.dp),
                 onClick = {
                     if (selectedTabIndex == PatientDetailsTab.Notes.id) navController.navigate(Screen.AddNote.route + "?patientId=${state.patientId}")
-                    if (selectedTabIndex == PatientDetailsTab.Prescriptions.id) navController.navigate(Screen.Prescription.route + "?patientId=${state.patientId}")
+                    if (selectedTabIndex == PatientDetailsTab.Prescriptions.id) navController.navigate(Screen.Prescription.route + "?appointmentId=${state.patientData?.appointment?.id ?: -1}")
                           },
             ) {
                 Icon(modifier = Modifier.size(24.dp),
@@ -93,10 +94,16 @@ fun PatientDetailsScreen(
                     state = pagerState) { index ->
                     when (index) {
                         PatientDetailsTab.Notes.id -> NotePage(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .weight(1f),
+                            state = state
+                        )
+                        PatientDetailsTab.Prescriptions.id -> PrescriptionPage(
+                            navController = navController,
                             modifier = Modifier.fillMaxWidth().weight(1f),
                             state = state
                         )
-                        PatientDetailsTab.Prescriptions.id -> Text(text = "Prescription : ${state.patientData.prescriptions.size}")
                     }
                 }
             }

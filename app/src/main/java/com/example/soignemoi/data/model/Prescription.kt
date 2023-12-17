@@ -7,5 +7,18 @@ data class Prescription(
     val appointmentId: Int,
     val start: Date,
     val end: Date,
-    val prescriptionsEntries: List<PrescriptionEntry>,
-)
+    val entries: List<PrescriptionEntry>,
+) {
+
+    fun getMedicinesAsString(): String {
+        var result = ""
+        entries.forEachIndexed { index, entry ->
+            result += entry.medicine.title
+            if (index < entries.lastIndex) result += ", "
+        }
+        return result
+    }
+
+    val isStillUpToDate: Boolean get() = end.time > System.currentTimeMillis()
+
+}

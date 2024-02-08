@@ -1,3 +1,36 @@
 <resources>
     <string name="app_name">SoigneMoi</string>
+    <string name="doctors_app">Espace Médecins</string>
+    <string name="username">Matricule</string>
+    <string name="password">Mot de passe</string>
+    <string name="connection">Connexion</string>
+    <string name="remember_login">Enregistrer les identifiants</string>
+    <string name="error_occured">Une erreur est survenue</string>
+    <string name="my_patients">Mes patients</string>
+    <string name="new_note">Nouvelle note</string>
+    <string name="note_title">Intitulé</string>
+    <string name="note_content">Contenu</string>
+    <string name="save">Enregistrer</string>
+    <string name="prescription_n">Prescription n°%d</string>
+    <string name="new_prescription">Nouvelle prescription</string>
+    <string name="add_medicine">Ajouter un médicament</string>
+    <string name="date_start">Date début</string>
+    <string name="date_end">Date fin</string>
+    <string name="select">Sélectionner</string>
+    <string name="add">Ajouter</string>
+    <string name="cancel">Retour</string>
+    <string name="dosage">Dosage</string>
+    <string name="error">Erreur</string>
+    <string name="medicine">Médicament</string>
+    <string name="frequency">Fréquence</string>
+    <string name="instructions">Instructions</string>
+    <string name="search">Recherche…</string>
+    <string name="daily">Jour</string>
+    <string name="weekly">Semaine</string>
+    <string name="monthly">Mois</string>
+
+    <plurals name="day">
+        <item quantity="one">%d Jour</item>
+        <item quantity="other">%d Jours</item>
+    </plurals>
 </resources>

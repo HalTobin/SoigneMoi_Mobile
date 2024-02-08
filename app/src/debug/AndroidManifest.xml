@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <application>
+        <activity
+            android:name=".ui.LoginTestActivity"
+            android:exported="false"
+            android:theme="@style/Theme.SoigneMoi"/>
+        <activity
+            android:name=".ui.PatientsListTestActivity"
+            android:exported="false"
+            android:theme="@style/Theme.SoigneMoi"/>
+        <activity
+            android:name=".ui.PatientDetailsTestActivity"
+            android:exported="false"
+            android:theme="@style/Theme.SoigneMoi"/>
+        <activity
+            android:name=".ui.AddNoteTestActivity"
+            android:exported="false"
+            android:theme="@style/Theme.SoigneMoi"/>
+        <activity
+            android:name=".ui.PrescriptionTestActivity"
+            android:exported="false"
+            android:theme="@style/Theme.SoigneMoi"/>
+        <activity
+            android:name=".ui.PrescriptionAddModeTestActivity"
+            android:exported="false"
+            android:theme="@style/Theme.SoigneMoi"/>
+    </application>
+
+</manifest>

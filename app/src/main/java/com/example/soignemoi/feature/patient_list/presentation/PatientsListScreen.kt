@@ -39,7 +39,7 @@ fun PatientsListScreen(
     onEvent: (PatientsListEvent) -> Unit
 ) {
 
-    Scaffold {
+    Scaffold(modifier = Modifier.testTag(PatientsListTag.SCREEN)) {
         Column(modifier = Modifier.padding(top = 16.dp)) {
             Box(modifier = Modifier.fillMaxWidth()) {
                 Text(
@@ -78,6 +78,7 @@ fun PatientsListScreen(
 }
 
 object PatientsListTag {
+    const val SCREEN = "patients_list_screen"
     const val LIST = "patients_list"
     const val PATIENT_ITEM_CONTAINER = "patient_item"
     const val REFRESH = "refresh_patient_list"

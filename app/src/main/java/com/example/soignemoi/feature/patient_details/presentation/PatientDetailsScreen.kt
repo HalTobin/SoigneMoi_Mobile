@@ -58,9 +58,10 @@ fun PatientDetailsScreen(
     val scope = rememberCoroutineScope()
 
     Scaffold(
+        modifier = Modifier.testTag(PatientDetailsTag.SCREEN),
         floatingActionButton = {
             SmallFloatingActionButton(
-                modifier = Modifier.size(64.dp),
+                modifier = Modifier.size(64.dp).testTag(PatientDetailsTag.ADD),
                 onClick = {
                     if (selectedTabIndex == PatientDetailsTab.Notes.id) navController.navigate(Screen.AddNote.route + "?patientId=${state.patientId}")
                     if (selectedTabIndex == PatientDetailsTab.Prescriptions.id) navController.navigate(Screen.Prescription.route + "?appointmentId=${state.patientData?.appointment?.id ?: -1}")
@@ -115,6 +116,8 @@ fun PatientDetailsScreen(
 }
 
 object PatientDetailsTag {
+    const val SCREEN = "patient_details_screen"
+    const val ADD = "patient_details_add"
     const val TAB_NOTES = "patient_details_tab_notes"
     const val TAB_PRESCRIPTIONS = "patient_details_tab_prescription"
     const val PAGE_NOTES = "patient_details_page_notes"

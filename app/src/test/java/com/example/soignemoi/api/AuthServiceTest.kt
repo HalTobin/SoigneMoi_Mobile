@@ -5,6 +5,7 @@ import android.util.Log
 import com.example.soignemoi.data.api.AuthService
 import com.example.soignemoi.data.api.LoginRequest
 import com.example.soignemoi.data.api.SessionManager
+import com.example.soignemoi.data.api.SessionManagerImpl
 import com.example.soignemoi.resource.AuthPlaceholder.TOKEN_RESPONSE_JSON
 import com.example.soignemoi.resource.AuthPlaceholder.tokenResponsePlaceholder
 import io.mockk.clearAllMocks
@@ -43,7 +44,7 @@ class AuthServiceTest {
 
     private val sp: SharedPreferences = mockk()
 
-    private val sessionManager = SessionManager(api, sp, sp)
+    private val sessionManager = SessionManagerImpl(api, sp, sp)
 
     @Before
     fun setUp() {

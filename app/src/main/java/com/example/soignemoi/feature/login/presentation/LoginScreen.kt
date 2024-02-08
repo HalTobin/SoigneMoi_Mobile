@@ -67,7 +67,7 @@ fun LoginScreen(
         }
     }
 
-    Scaffold {
+    Scaffold(modifier = Modifier.testTag(LoginScreenTag.SCREEN)) {
         Box(modifier = Modifier.fillMaxSize(),
             contentAlignment = Alignment.Center) {
             Column(
@@ -136,7 +136,7 @@ fun LoginScreen(
                 }
                 Spacer(modifier = Modifier.height(16.dp))
                 Button(
-                    modifier = Modifier.fillMaxWidth(0.6f),
+                    modifier = Modifier.fillMaxWidth(0.6f).testTag(LoginScreenTag.CONNECTION),
                     onClick = { onEvent(LoginEvent.Connect) }) {
                     Text(text = stringResource(id = R.string.connection).uppercase())
                 }
@@ -158,10 +158,12 @@ fun LoginScreen(
 }
 
 object LoginScreenTag {
+    const val SCREEN = "login_screen"
     const val MAIL = "login_mail_field"
     const val PASSWORD = "login_password_field"
     const val SAVE_CREDENTIALS = "login_save_field"
     const val SHOW_PASSWORD = "login_show_password_button"
+    const val CONNECTION = "login_connection_button"
 }
 
 @Preview

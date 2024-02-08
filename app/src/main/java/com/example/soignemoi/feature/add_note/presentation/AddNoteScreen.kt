@@ -43,7 +43,7 @@ fun AddNoteScreen(
         }
     }
 
-    Scaffold {
+    Scaffold(modifier = Modifier.testTag(AddNoteTag.SCREEN)) {
         state.patientData?.let {
             Column(modifier = Modifier.fillMaxSize(),
                 horizontalAlignment = Alignment.CenterHorizontally) {
@@ -94,6 +94,7 @@ fun AddNoteScreen(
 }
 
 object AddNoteTag {
+    const val SCREEN = "add_note_screen"
     const val TITLE = "add_note_title"
     const val CONTENT = "add_note_content"
 }

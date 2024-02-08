@@ -58,7 +58,7 @@ fun PrescriptionScreen(
 
     val isEditable = !((state.prescriptionId != null) && (state.dateEnd?.time ?: -1) < System.currentTimeMillis())
 
-    Scaffold {
+    Scaffold(modifier = Modifier.testTag(PrescriptionScreenTag.SCREEN)) {
 
         if (isStartDatePickerOpen) MyDatePickerDialog(
             maximumInMillis = state.dateEnd?.time ?: Long.MAX_VALUE,
@@ -168,6 +168,7 @@ fun PrescriptionScreen(
 }
 
 object PrescriptionScreenTag {
+    const val SCREEN = "prescription_screen"
     const val TITLE = "prescription_title"
     const val ADD_ENTRY = "prescription_add_entry"
     const val ENTRY = "prescription_entry"

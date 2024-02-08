@@ -27,6 +27,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.soignemoi.feature.patient_details.presentation.PatientDetailsTab.Companion.TAB_ITEMS
@@ -77,6 +78,7 @@ fun PatientDetailsScreen(
                 TabRow(selectedTabIndex = selectedTabIndex) {
                     TAB_ITEMS.forEach() { item ->
                         Tab(
+                            modifier = Modifier.testTag(item.tag),
                             selected = (item.id == selectedTabIndex),
                             onClick = {
                                 selectedTabIndex = item.id
@@ -108,14 +110,22 @@ fun PatientDetailsScreen(
                 }
             }
         }
-        // TODO - Make the loading version of the screen
     }
 
 }
 
-sealed class PatientDetailsTab(val title: String, val id: Int) {
-    object Notes: PatientDetailsTab(title = "Notes", id = 0)
-    object Prescriptions: PatientDetailsTab(title = "Prescriptions", id = 1)
+object PatientDetailsTag {
+    const val TAB_NOTES = "patient_details_tab_notes"
+    const val TAB_PRESCRIPTIONS = "patient_details_tab_prescription"
+    const val PAGE_NOTES = "patient_details_page_notes"
+    const val PAGE_PRESCRIPTION = "patient_details_page_prescription"
+    const val NOTE = "patient_details_note_item"
+    const val PRESCRIPTION = "patient_details_prescription_item"
+}
+
+sealed class PatientDetailsTab(val title: String, val id: Int, val tag: String) {
+    object Notes: PatientDetailsTab(title = "Notes", id = 0, tag = PatientDetailsTag.TAB_NOTES)
+    object Prescriptions: PatientDetailsTab(title = "Prescriptions", id = 1, tag = PatientDetailsTag.TAB_PRESCRIPTIONS)
 
     companion object {
         val TAB_ITEMS: List<PatientDetailsTab> = listOf(Notes, Prescriptions)

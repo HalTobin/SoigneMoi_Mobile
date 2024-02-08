@@ -29,6 +29,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardCapitalization
@@ -91,7 +92,7 @@ fun LoginScreen(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 OutlinedTextField(
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier.fillMaxWidth().testTag(LoginScreenTag.MAIL),
                     label = { Text(text = stringResource(id = R.string.username)) },
                     singleLine = true,
                     keyboardOptions = KeyboardOptions(
@@ -102,7 +103,7 @@ fun LoginScreen(
                 )
                 Spacer(modifier = Modifier.height(16.dp))
                 OutlinedTextField(
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier.fillMaxWidth().testTag(LoginScreenTag.PASSWORD),
                     label = { Text(text = stringResource(id = R.string.password)) },
                     singleLine = true,
                     visualTransformation =  if (state.showPassword) VisualTransformation.None else PasswordVisualTransformation(),
@@ -111,7 +112,9 @@ fun LoginScreen(
                         keyboardType = KeyboardType.Password
                     ),
                     trailingIcon = {
-                        IconButton(onClick = { onEvent(LoginEvent.InvertShowPassword) }) {
+                        IconButton(
+                            modifier = Modifier.testTag(LoginScreenTag.SHOW_PASSWORD),
+                            onClick = { onEvent(LoginEvent.InvertShowPassword) }) {
                             Icon(
                                 imageVector = if (state.showPassword) Icons.Filled.VisibilityOff else Icons.Filled.Visibility,
                                 contentDescription = null
@@ -124,6 +127,7 @@ fun LoginScreen(
                 Spacer(modifier = Modifier.height(16.dp))
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Checkbox(
+                        modifier = Modifier.testTag(LoginScreenTag.SAVE_CREDENTIALS),
                         checked = state.saveLogin,
                         onCheckedChange = { onEvent(LoginEvent.ChangeSavedLogin(it)) }
                     )
@@ -151,6 +155,13 @@ fun LoginScreen(
         }
     }
 
+}
+
+object LoginScreenTag {
+    const val MAIL = "login_mail_field"
+    const val PASSWORD = "login_password_field"
+    const val SAVE_CREDENTIALS = "login_save_field"
+    const val SHOW_PASSWORD = "login_show_password_button"
 }
 
 @Preview

@@ -4,6 +4,7 @@ import android.content.SharedPreferences
 import com.example.soignemoi.data.api.AuthInterceptor
 import com.example.soignemoi.data.api.AuthService
 import com.example.soignemoi.data.api.SessionManager
+import com.example.soignemoi.data.api.SessionManagerImpl
 import com.example.soignemoi.data.api.SoigneMoiService
 import dagger.Module
 import dagger.Provides
@@ -21,7 +22,8 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
 
-    const val BASE_URL = "http://10.0.4.105:9091/"
+    //const val BASE_URL = "http://10.0.4.105:9091/"
+    const val BASE_URL = "https://soigne.moi.totouiproject.ovh/api/"
 
     @Provides
     @Singleton
@@ -36,13 +38,19 @@ object NetworkModule {
         .build()
         .create(AuthService::class.java)
 
+    private val logInterceptor = HttpLoggingInterceptor().apply {
+        this.level = HttpLoggingInterceptor.Level.BODY
+    }
+
     @Provides
     @Singleton
     fun provideSoigneMoiService(
         authInterceptor: AuthInterceptor
     ): SoigneMoiService = Retrofit.Builder()
         .baseUrl(BASE_URL)
-        .client(OkHttpClient.Builder().addInterceptor(authInterceptor).build())
+        .client(OkHttpClient.Builder()
+            .addInterceptor(authInterceptor)
+            .build())
         .addConverterFactory(GsonConverterFactory.create())
         .build()
         .create(SoigneMoiService::class.java)
@@ -54,7 +62,7 @@ object NetworkModule {
         @Named("shared_preferences") sp: SharedPreferences,
         @Named("secured_shared_preferences") securedSp: SharedPreferences
     ): SessionManager =
-        SessionManager(
+        SessionManagerImpl(
             api = api,
             sp = sp,
             securedSp = securedSp

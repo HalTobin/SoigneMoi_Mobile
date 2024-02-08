@@ -20,6 +20,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -48,7 +49,7 @@ fun PatientsListScreen(
                     fontWeight = FontWeight.Bold,
                     textAlign = TextAlign.Center
                 )
-                IconButton(modifier = Modifier.align(Alignment.CenterEnd),
+                IconButton(modifier = Modifier.align(Alignment.CenterEnd).testTag(PatientsListTag.REFRESH),
                     onClick = { onEvent(PatientsListEvent.Refresh) }) {
                     Icon(modifier = Modifier.size(32.dp),
                         imageVector = Icons.Default.Refresh, contentDescription = null)
@@ -57,9 +58,10 @@ fun PatientsListScreen(
             HorizontalDivider(modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 4.dp))
-            LazyColumn {
+            LazyColumn(modifier = Modifier.testTag(PatientsListTag.LIST)) {
                 if (!state.loading) itemsIndexed(state.patients) { index, patient ->
                     Column(modifier = Modifier
+                        .testTag(PatientsListTag.PATIENT_ITEM_CONTAINER)
                         .clickable {
                             navController.navigate(Screen.PatientDetails.route + "?patientId=${patient.id}")
                         }) {
@@ -73,4 +75,11 @@ fun PatientsListScreen(
         }
     }
 
+}
+
+object PatientsListTag {
+    const val LIST = "patients_list"
+    const val PATIENT_ITEM_CONTAINER = "patient_item"
+    const val REFRESH = "refresh_patient_list"
+    const val LIST_LOADING = "patient_list_loading"
 }

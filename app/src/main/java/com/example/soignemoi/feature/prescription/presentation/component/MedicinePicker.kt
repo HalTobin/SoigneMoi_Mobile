@@ -28,6 +28,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
@@ -52,7 +53,7 @@ fun MedicinePicker(
                 .fillMaxWidth()
                 .fillMaxHeight(0.85f)) {
                 TextField(
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier.fillMaxWidth().testTag(AddEntryDialogTag.MEDICINE_SEARCH),
                     label = { Text(text = stringResource(id = R.string.search))},
                     value = search,
                     onValueChange = { search = it }
@@ -61,13 +62,16 @@ fun MedicinePicker(
                     .fillMaxWidth()
                     .weight(1f)) {
                     itemsIndexed(medicines.filter { if (search.isNotBlank()) it.title.lowercase().contains(search.lowercase()) else true }) { index, medicine ->
-                        Column(modifier = Modifier.clickable {
+                        Column(modifier = Modifier
+                            .testTag(AddEntryDialogTag.MEDICINE_ITEM)
+                            .clickable {
                             selected = medicine.id
                             isOpen = false
                             onSelect(medicine.id)
                         }) {
                             Text(
-                                modifier = Modifier.padding(horizontal = 12.dp, vertical = 12.dp),
+                                modifier = Modifier.padding(horizontal = 12.dp, vertical = 12.dp)
+                                    .testTag(AddEntryDialogTag.MEDICINE_TITLE),
                                 style = MaterialTheme.typography.titleMedium,
                                 text = medicine.title)
                             if (index < medicines.lastIndex) HorizontalDivider(modifier = Modifier.fillMaxWidth())
@@ -81,7 +85,8 @@ fun MedicinePicker(
     OutlinedTextField(
         modifier = Modifier
             .fillMaxWidth()
-            .clickable { isOpen = true },
+            .clickable { isOpen = true }
+            .testTag(AddEntryDialogTag.SELECT_MEDICINE),
         readOnly = true,
         enabled = false,
         label = { Text(text = stringResource(id = R.string.medicine)) },

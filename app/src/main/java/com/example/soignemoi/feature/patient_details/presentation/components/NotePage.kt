@@ -9,8 +9,10 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import com.example.soignemoi.feature.patient_details.presentation.PatientDetailsState
+import com.example.soignemoi.feature.patient_details.presentation.PatientDetailsTag
 
 @Composable
 fun NotePage(
@@ -20,11 +22,11 @@ fun NotePage(
 
     state.patientData?.let { data ->
         LazyColumn(
-            modifier = modifier.fillMaxSize(),
+            modifier = modifier.fillMaxSize().testTag(PatientDetailsTag.PAGE_NOTES),
             contentPadding = PaddingValues(8.dp)
         ) {
             items(data.notes.sortedByDescending { it.date }) { note ->
-                Column {
+                Column(modifier = Modifier.testTag(PatientDetailsTag.NOTE)) {
                     NoteItem(note = note)
                     Spacer(modifier = Modifier.height(8.dp))
                 }

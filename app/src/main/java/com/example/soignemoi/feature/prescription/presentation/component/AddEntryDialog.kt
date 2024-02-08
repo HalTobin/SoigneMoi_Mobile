@@ -19,6 +19,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
@@ -56,7 +57,8 @@ fun AddEntryDialog(
                     OutlinedTextField(
                         modifier = Modifier
                             .weight(1f)
-                            .padding(end = 4.dp),
+                            .padding(end = 4.dp)
+                            .testTag(AddEntryDialogTag.DOSAGE),
                         label = { Text(text = stringResource(id = R.string.dosage)) },
                         singleLine = true,
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
@@ -66,7 +68,8 @@ fun AddEntryDialog(
                     BasicExposedDropDown(
                         modifier = Modifier
                             .weight(1f)
-                            .padding(start = 4.dp),
+                            .padding(start = 4.dp)
+                            .testTag(AddEntryDialogTag.FREQUENCY),
                         label = stringResource(id = R.string.frequency),
                         items = Frequency.all.map { BasicDropDownItem(it.id, it.title) },
                         text = Frequency.getFromId(entry.frequency).title,
@@ -76,7 +79,8 @@ fun AddEntryDialog(
                 OutlinedTextField(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .weight(1f),
+                        .weight(1f)
+                        .testTag(AddEntryDialogTag.CONTENT),
                     label = { Text(text = stringResource(id = R.string.instructions)) },
                     singleLine = false,
                     value = entry.note,
@@ -99,7 +103,8 @@ fun AddEntryDialog(
                     }
                     Button(modifier = Modifier
                         .weight(1f)
-                        .padding(start = 4.dp, end = 8.dp),
+                        .padding(start = 4.dp, end = 8.dp)
+                        .testTag(AddEntryDialogTag.SAVE),
                         enabled = entry.isFilled,
                         onClick = { onAdd(entry) }) {
                         Text(text = stringResource(id = R.string.add))
@@ -109,4 +114,15 @@ fun AddEntryDialog(
         }
     }
 
+}
+
+object AddEntryDialogTag {
+    const val SELECT_MEDICINE = "add_entry_select_medicine"
+    const val MEDICINE_SEARCH = "add_entry_search_medicine"
+    const val MEDICINE_ITEM = "add_entry_medicine_item"
+    const val MEDICINE_TITLE = "add_entry_medicine_title"
+    const val DOSAGE = "add_entry_dosage"
+    const val FREQUENCY = "add_entry_frequency"
+    const val CONTENT = "add_entry_content"
+    const val SAVE = "add_entry_save"
 }

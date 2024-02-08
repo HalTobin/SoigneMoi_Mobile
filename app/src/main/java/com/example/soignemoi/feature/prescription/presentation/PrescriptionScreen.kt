@@ -29,6 +29,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -91,7 +92,8 @@ fun PrescriptionScreen(
             Text(
                 modifier = Modifier
                     .padding(vertical = 8.dp)
-                    .fillMaxWidth(),
+                    .fillMaxWidth()
+                    .testTag(PrescriptionScreenTag.TITLE),
                 text =
                     if (state.prescriptionId == null) stringResource(id = R.string.new_prescription).uppercase()
                     else stringResource(id = R.string.prescription_n, state.prescriptionId).uppercase(),
@@ -115,6 +117,7 @@ fun PrescriptionScreen(
                     Column(modifier = Modifier.fillMaxWidth(),
                         horizontalAlignment = Alignment.CenterHorizontally) {
                         OutlinedButton(
+                            modifier = Modifier.testTag(PrescriptionScreenTag.ADD_ENTRY),
                             onClick = { isAddEntryOpen = true }) {
                             Icon(Icons.Default.Add, null)
                             Text(text = stringResource(id = R.string.add_medicine))
@@ -125,7 +128,8 @@ fun PrescriptionScreen(
             Row {
                 Button(modifier = Modifier
                     .weight(1f)
-                    .padding(start = 8.dp, end = 4.dp),
+                    .padding(start = 8.dp, end = 4.dp)
+                    .testTag(PrescriptionScreenTag.START_DATE),
                     enabled = (state.prescriptionId == null),
                     onClick = { isStartDatePickerOpen = true }) {
                     Text(modifier = Modifier.padding(start = 4.dp),
@@ -136,7 +140,8 @@ fun PrescriptionScreen(
                 }
                 Button(modifier = Modifier
                     .weight(1f)
-                    .padding(start = 4.dp, end = 8.dp),
+                    .padding(start = 4.dp, end = 8.dp)
+                    .testTag(PrescriptionScreenTag.END_DATE),
                     enabled = isEditable,
                     onClick = { isEndDatePickerOpen = true }) {
                     Text(text =
@@ -160,4 +165,12 @@ fun PrescriptionScreen(
 
 }
 
+}
+
+object PrescriptionScreenTag {
+    const val TITLE = "prescription_title"
+    const val ADD_ENTRY = "prescription_add_entry"
+    const val ENTRY = "prescription_entry"
+    const val START_DATE = "prescription_entry_start"
+    const val END_DATE = "prescription_entry_end"
 }

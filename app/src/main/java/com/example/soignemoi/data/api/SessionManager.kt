@@ -6,33 +6,28 @@ import androidx.core.content.edit
 import com.example.soignemoi.util.PreferencesKey
 import javax.inject.Inject
 
-class SessionManager @Inject constructor(
+class SessionManagerImpl @Inject constructor(
     private val api: AuthService,
     private val sp: SharedPreferences,
     private val securedSp: SharedPreferences
-) {
+): SessionManager {
 
-    var tokenValidity = 0L
-    var tokenRetrievedTime = 0L
-
-    suspend fun autoConnect(): String {
+    override suspend fun autoConnect(): String {
         val credentials = loadCredentials()
         val response = connect(credentials, false)
         return response.accessToken
     }
 
-    suspend fun connect(credentials: LoginRequest, save: Boolean): TokenResponse {
-        saveCredentials(credentials)
+    override suspend fun connect(credentials: LoginRequest, save: Boolean): TokenResponse {
+        if (save) saveCredentials(credentials)
         try {
             val response = api.login(credentials)
-            tokenRetrievedTime = System.currentTimeMillis()
             if (response.isSuccessful) {
                 // Extract the token from the response
                 val tokenResponse = response.body()
 
                 if (tokenResponse == null || tokenResponse.role != "Doctor") throw IllegalStateException("Connection failed")
                 // Return the token or handle it as needed
-                tokenValidity = tokenResponse.validity
                 return tokenResponse
             } else {
                 // Handle the error (e.g., show an error message)
@@ -50,22 +45,25 @@ class SessionManager @Inject constructor(
         apply()
     }
 
-    fun hasTokenExpired(): Boolean {
-        val currentTimeMillis = System.currentTimeMillis()
-        return (currentTimeMillis - tokenRetrievedTime) >= tokenValidity
-    }
-
-    fun loadCredentials(): LoginRequest = LoginRequest(
+    override fun loadCredentials(): LoginRequest = LoginRequest(
         mail = securedSp.getString(PreferencesKey.LOGIN_USER, "") ?: "",
         password = securedSp.getString(PreferencesKey.LOGIN_PASSWORD, "") ?: ""
     )
 
-    var rememberLogin: Boolean
+    override var rememberLogin: Boolean
         get() = sp.getBoolean(PreferencesKey.LOGIN_REMEMBER, false)
         set(value) { sp.edit().putBoolean(PreferencesKey.LOGIN_REMEMBER, value).apply() }
 
-    var token: String
+    override var token: String
         get() = securedSp.getString(PreferencesKey.LOGIN_TOKEN, "") ?: ""
         set(value) { securedSp.edit().putString(PreferencesKey.LOGIN_TOKEN, value).apply() }
 
+}
+
+interface SessionManager {
+    suspend fun autoConnect(): String
+    suspend fun connect(credentials: LoginRequest, save: Boolean): TokenResponse
+    fun loadCredentials(): LoginRequest
+    var rememberLogin: Boolean
+    var token: String
 }

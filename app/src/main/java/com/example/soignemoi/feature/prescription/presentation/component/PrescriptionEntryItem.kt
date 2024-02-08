@@ -15,10 +15,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import com.example.soignemoi.data.model.Frequency
 import com.example.soignemoi.data.model.Medicine
 import com.example.soignemoi.feature.prescription.data.NewEntry
+import com.example.soignemoi.feature.prescription.presentation.PrescriptionScreenTag
 
 @Composable
 fun PrescriptionEntryItem(
@@ -32,6 +34,7 @@ fun PrescriptionEntryItem(
             .clip(RoundedCornerShape(8.dp))
             .background(MaterialTheme.colorScheme.surface)
             .padding(8.dp)
+            .testTag(PrescriptionScreenTag.ENTRY)
     ) {
         Row(modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically) {

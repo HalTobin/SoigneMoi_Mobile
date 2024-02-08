@@ -16,7 +16,7 @@ android {
         versionCode = 1
         versionName = "1.0"
 
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner = "com.example.soignemoi.HiltTestRunner"
         vectorDrawables {
             useSupportLibrary = true
         }
@@ -47,6 +47,8 @@ android {
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
+            excludes += "/META-INF/LICENSE.md"
+            excludes += "/META-INF/LICENSE-notice.md"
         }
     }
 }
@@ -64,6 +66,10 @@ dependencies {
     implementation("androidx.compose.ui:ui-tooling-preview:$composeVersion")
     implementation("androidx.compose.material:material-icons-extended:$composeVersion")
     implementation("androidx.compose.material3:material3-android:1.2.0-alpha12")
+    // Test rules and transitive dependencies:
+    androidTestImplementation("androidx.compose.ui:ui-test-junit4:$composeVersion")
+    // Needed for createAndroidComposeRule, but not createComposeRule:
+    debugImplementation("androidx.compose.ui:ui-test-manifest:$composeVersion")
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
@@ -84,6 +90,7 @@ dependencies {
     val daggerHiltVersion = "2.48.1"
     implementation("com.google.dagger:hilt-android:$daggerHiltVersion")
     ksp("com.google.dagger:hilt-android-compiler:$daggerHiltVersion")
+    androidTestImplementation("com.google.dagger:hilt-android-testing:$daggerHiltVersion")
 
     // Retrofit
     val retrofitVersion = "2.9.0"
@@ -93,4 +100,10 @@ dependencies {
     implementation("com.squareup.okhttp3:okhttp:$okhttpVersion")
     implementation("com.squareup.okhttp3:logging-interceptor:$okhttpVersion")
     implementation("com.squareup.okhttp3:mockwebserver:$okhttpVersion")
+    androidTestImplementation("com.squareup.okhttp3:mockwebserver:$okhttpVersion")
+
+    // Mock for testing
+    val mockkVersion = "1.13.9"
+    testImplementation("io.mockk:mockk:$mockkVersion")
+    androidTestImplementation("io.mockk:mockk-android:$mockkVersion")
 }

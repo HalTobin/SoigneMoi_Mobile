@@ -14,6 +14,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -57,7 +58,8 @@ fun AddNoteScreen(
                 OutlinedTextField(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(horizontal = 8.dp),
+                        .padding(horizontal = 8.dp)
+                        .testTag(AddNoteTag.TITLE),
                     label = { Text(text = stringResource(id = R.string.note_title)) },
                     value = state.title,
                     singleLine = true,
@@ -67,7 +69,8 @@ fun AddNoteScreen(
                     modifier = Modifier
                         .fillMaxWidth()
                         .weight(1f)
-                        .padding(horizontal = 8.dp),
+                        .padding(horizontal = 8.dp)
+                        .testTag(AddNoteTag.CONTENT),
                     label = { Text(text = stringResource(id = R.string.note_content)) },
                     value = state.content,
                     onValueChange = { if (it.length < MAX_CHAR) onEvent(AddNoteEvent.UpdateContent(it)) },
@@ -88,4 +91,9 @@ fun AddNoteScreen(
         }
     }
 
+}
+
+object AddNoteTag {
+    const val TITLE = "add_note_title"
+    const val CONTENT = "add_note_content"
 }
